@@ -21,7 +21,7 @@ int main(int argc, char* argv[]) {
 			continue;*/
 
 		HandleEvents();
-		Update();
+		Update();           
 		Render();
 
 		SDL_Delay(30);	// 30 밀리세컨드 기다린다.
