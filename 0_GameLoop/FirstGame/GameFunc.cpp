@@ -127,18 +127,22 @@ void Render() {
 	//// 2. 캐릭터 그리기.
 	
 	// 2.1. 비행기 그리기
+
 	cur.X = f_X;
 	cur.Y = f_Y;
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cur);
 	std::cout << f_output;
 	std::cout.flush(); //출력버퍼 안비워주니까 문제가 생김 *! 이런식으로 출력 됨
 
+
 	//2.2 미사일 그리기
-	cur.X = m_X;
-	cur.Y = m_Y;
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cur);
-	std::cout << m_output;
-	
+	if (m_input == 1)
+	{
+		cur.X = m_X;
+		cur.Y = m_Y;
+		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cur);
+		std::cout << m_output;
+	}
 	//// 3. 프레임 완성.
 	// std::cout으로 출력한 내용 중, 아직 화면에 표시되 않고 버퍼에 남아 있는 것이 있다면, 모두 화면에 출력되도록 한다.
 	std::cout.flush();
