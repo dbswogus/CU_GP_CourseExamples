@@ -179,13 +179,19 @@ void HandleEvents()
 			else if (event.key.keysym.sym == SDLK_DOWN) {
 				f_input = 4;
 			}
-			else if (event.key.keysym.sym == SDLK_SPACE) {
+			else if (event.key.keysym.sym == SDLK_SPACE){
 				m_input = 1;
 			}
+
 			break;
 
 		case SDL_KEYUP:
-			f_input = 0;
+			if (event.key.keysym.sym == SDLK_LEFT
+				|| event.key.keysym.sym == SDLK_RIGHT
+				|| event.key.keysym.sym == SDLK_UP
+				|| event.key.keysym.sym == SDLK_DOWN) {
+				f_input = 0; //움직이면서 미사일 쏠 수 있게 화살표 키만 처리를 함
+			}
 			break;
 
 		default:
