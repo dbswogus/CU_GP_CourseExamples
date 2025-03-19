@@ -1,10 +1,9 @@
 ﻿#include "GameFunc.h"
 #include <windows.h>
 
-int f_input; 
 bool f_input_left = false, f_input_right = false, f_input_up = false, f_input_down = false; //비행기 이동을 위한 상태
-//기존 코드는 키보드를 때면 바로 f_input = 0이 되어서 멈추는 현상 발생 -> true 일 때만 f_input이 바뀌게 설정
-int m_input; //미사일 이동을 위한 상태
+//기존 코드는 키보드를 때면 바로 f_input = 0이 되어서 멈추는 현상 발생 -> true 일 때만 움직이게
+bool m_input; //미사일 이동을 위한 상태
 
 std::string f_output; // 비행기 텍스쳐
 std::string m_output; // 미사일 텍스쳐
@@ -29,8 +28,7 @@ double g_elapsed_time_ms;
 void InitGame() {
 	f_output = "*";
 	m_output = "!";
-	f_input = 0;
-	m_input = 0;
+	m_input = false;
 
 	g_flag_running = true;
 
@@ -61,13 +59,13 @@ void Update() {
 	//키 입력에 따른 로직
 	
 	//비행기
-	if (f_input == 1) f_X -= 1; // left
+	if (f_input_left) f_X -= 1; // left
 	
-	else if (f_input == 2) f_X += 1; // right
+	else if (f_input_right) f_X += 1; // right
 
-	else if (f_input == 3) f_Y -= 1;//up
+	else if (f_input_up) f_Y -= 1;//up
 	
-	else if (f_input == 4) f_Y += 1;//down
+	else if (f_input_down) f_Y += 1;//down
 	
 
 	//////////////////////////////////////////////
@@ -82,7 +80,7 @@ void Update() {
 	
 
 	// 미사일
-	if (m_input == 0)
+	if (!m_input)
 	{
 		m_X = f_X;
 		m_Y = f_Y;
@@ -91,7 +89,7 @@ void Update() {
 		m_Y -= 1;
 		if (m_Y <0)
 		{
-			m_input = 0;
+			m_input = false;
 		}
 	}
 
@@ -206,23 +204,6 @@ void HandleEvents()
 		default:
 			break;
 		}
-	}
-
-	// 현재 상태를 기반으로 f_input 설정
-	if (f_input_left) {
-		f_input = 1; // 왼쪽
-	}
-	else if (f_input_right) {
-		f_input = 2; // 오른쪽
-	}
-	else if (f_input_up) {
-		f_input = 3; // 위
-	}
-	else if (f_input_down) {
-		f_input = 4; // 아래
-	}
-	else {
-		f_input = 0; // 아무 키도 안눌림
 	}
 
 }
