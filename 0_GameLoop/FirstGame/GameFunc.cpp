@@ -4,7 +4,7 @@
 int f_input; 
 bool f_input_left = false, f_input_right = false, f_input_up = false, f_input_down = false; //비행기 이동을 위한 상태
 //기존 코드는 키보드를 때면 바로 f_input = 0이 되어서 멈추는 현상 발생 -> true 일 때만 f_input이 바뀌게 설정
-bool m_input = false; //미사일 이동을 위한 상태
+int m_input; //미사일 이동을 위한 상태
 
 std::string f_output; // 비행기 텍스쳐
 std::string m_output; // 미사일 텍스쳐
@@ -29,7 +29,9 @@ double g_elapsed_time_ms;
 void InitGame() {
 	f_output = "*";
 	m_output = "!";
-	int f_input = 0;
+	f_input = 0;
+	m_input = 0;
+
 	g_flag_running = true;
 
 	f_X = 10;
