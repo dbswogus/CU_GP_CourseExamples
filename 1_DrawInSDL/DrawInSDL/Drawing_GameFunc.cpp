@@ -15,23 +15,23 @@ void InitGame() {
 	g_input = 0;
 	g_flag_running = true;
 
-	g_char_pos.x = 100;
+	g_char_pos.x = 100; //초록 그림
 	g_char_pos.y = 100;
 	g_char_pos.w = 50;
 	g_char_pos.h = 100;
 
 	g_elapsed_time_ms = 0;
 
-	SDL_Surface* ryu_sheet_surface = IMG_Load("../../Resources/60224.png");
-	g_ryu_sheet_texture = SDL_CreateTextureFromSurface(g_renderer, ryu_sheet_surface);
-	SDL_FreeSurface(ryu_sheet_surface);
+	SDL_Surface* ryu_sheet_surface = IMG_Load("../../Resources/60224.png"); // hdd 에서 cpu로 가져옴
+	g_ryu_sheet_texture = SDL_CreateTextureFromSurface(g_renderer, ryu_sheet_surface); // gpu 메모리로 넘김
+	SDL_FreeSurface(ryu_sheet_surface); //cpu 안에 있는걸 지움
 
-	g_source_rect.x = 171;
+	g_source_rect.x = 171; // png 안에 캐릭터 위치
 	g_source_rect.y = 1647;
-	g_source_rect.w = 67;
+	g_source_rect.w = 67; // 캐릭터 가로 세로
 	g_source_rect.h = 140;
 
-	g_destination_rect.x = 300;
+	g_destination_rect.x = 300; // 윈도우 안에 위치
 	g_destination_rect.y = 200;
 	g_destination_rect.w = g_source_rect.w;
 	g_destination_rect.h = g_source_rect.h;
@@ -91,11 +91,11 @@ void Update() {
 void Render() {
 
 	// Background
-	SDL_SetRenderDrawColor(g_renderer, 255, 0, 0, 255);
-	SDL_RenderClear(g_renderer);
+	SDL_SetRenderDrawColor(g_renderer, 255, 0, 0, 255); //기본 화면을 지우기 위해
+	SDL_RenderClear(g_renderer); // 위의 색으로 채움
 
 	// Character
-	SDL_SetRenderDrawColor(g_renderer, 0, 255, 0, 255);
+	SDL_SetRenderDrawColor(g_renderer, 0, 255, 0, 255); 
 	SDL_RenderFillRect(g_renderer, &g_char_pos);
 
 	// g_ryu_sheet_texture
