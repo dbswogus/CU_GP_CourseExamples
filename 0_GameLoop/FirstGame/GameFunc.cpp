@@ -182,7 +182,7 @@ void HandleEvents()
 				f_input_down = true; // 아래
 			}
 			else if (event.key.keysym.sym == SDLK_SPACE) {
-				m_input = 1;
+				m_input = true;
 			}
 			break;
 
