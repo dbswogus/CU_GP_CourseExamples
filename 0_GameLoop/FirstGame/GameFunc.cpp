@@ -138,7 +138,7 @@ void Render() {
 
 
 	//2.2 미사일 그리기
-	if (m_input == 1)
+	if (m_input)
 	{
 		cur.X = m_X;
 		cur.Y = m_Y;
