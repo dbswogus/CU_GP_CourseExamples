@@ -1,8 +1,10 @@
 ﻿#include "GameFunc.h"
 #include <windows.h>
 
-int f_input; //비행기 이동을 위한 상태
-int m_input; //미사일 이동을 위한 상태
+int f_input; 
+bool f_input_left = false, f_input_right = false, f_input_up = false, f_input_down = false; //비행기 이동을 위한 상태
+//기존 코드는 키보드를 때면 바로 f_input = 0이 되어서 멈추는 현상 발생 -> true 일 때만 f_input이 바뀌게 설정
+bool m_input = false; //미사일 이동을 위한 상태
 
 std::string f_output; // 비행기 텍스쳐
 std::string m_output; // 미사일 텍스쳐
@@ -25,9 +27,9 @@ double g_elapsed_time_ms;
 // 프로그램이 시작될 때 최초에 한 번 호출되는 함수.
 // 이 함수에서 게임에 필요한 자원(이미지, 사운드 등)을 로딩하고, 상태 변수들을 초기화 해야한다.
 void InitGame() {
-	f_input = 0;
 	f_output = "*";
 	m_output = "!";
+	int f_input = 0;
 	g_flag_running = true;
 
 	f_X = 10;
@@ -158,7 +160,7 @@ void HandleEvents()
 {
 	SDL_Event event;
 
-	if( SDL_PollEvent( &event ) ) {
+	if (SDL_PollEvent(&event)) {
 
 		switch (event.type) {
 
@@ -168,29 +170,34 @@ void HandleEvents()
 
 		case SDL_KEYDOWN:
 			if (event.key.keysym.sym == SDLK_LEFT) {
-				f_input = 1;
+				f_input_left = true; // 왼쪽
 			}
 			else if (event.key.keysym.sym == SDLK_RIGHT) {
-				f_input = 2;
+				f_input_right = true; // 오른쪽
 			}
-			else if (event.key.keysym.sym == SDLK_UP){
-				f_input = 3;
+			else if (event.key.keysym.sym == SDLK_UP) {
+				f_input_up = true; // 위
 			}
 			else if (event.key.keysym.sym == SDLK_DOWN) {
-				f_input = 4;
+				f_input_down = true; // 아래
 			}
-			else if (event.key.keysym.sym == SDLK_SPACE){
+			else if (event.key.keysym.sym == SDLK_SPACE) {
 				m_input = 1;
 			}
-
 			break;
 
 		case SDL_KEYUP:
-			if (event.key.keysym.sym == SDLK_LEFT
-				|| event.key.keysym.sym == SDLK_RIGHT
-				|| event.key.keysym.sym == SDLK_UP
-				|| event.key.keysym.sym == SDLK_DOWN) {
-				f_input = 0; //움직이면서 미사일 쏠 수 있게 화살표 키만 처리를 함
+			if (event.key.keysym.sym == SDLK_LEFT) {
+				f_input_left = false;
+			}
+			else if (event.key.keysym.sym == SDLK_RIGHT) {
+				f_input_right = false;
+			}
+			else if (event.key.keysym.sym == SDLK_UP) {
+				f_input_up = false;
+			}
+			else if (event.key.keysym.sym == SDLK_DOWN) {
+				f_input_down = false;
 			}
 			break;
 
@@ -198,6 +205,24 @@ void HandleEvents()
 			break;
 		}
 	}
+
+	// 현재 상태를 기반으로 f_input 설정
+	if (f_input_left) {
+		f_input = 1; // 왼쪽
+	}
+	else if (f_input_right) {
+		f_input = 2; // 오른쪽
+	}
+	else if (f_input_up) {
+		f_input = 3; // 위
+	}
+	else if (f_input_down) {
+		f_input = 4; // 아래
+	}
+	else {
+		f_input = 0; // 아무 키도 안눌림
+	}
+
 }
 
 
